@@ -49,6 +49,7 @@ let myTestList =
     ) " "( 19 ( 19 1 23 14 1515 ) 1 23 14 1515 )\n( 19 1 23 5 1515 )\n1515\n24\n( true 1 23 5 1515 )\nfalse";
     t "err1" "(let ((x (tuple 19 1 23 14 1515))) (+ (get x 1 Num) (get x 2 Tup)))" "Compile error: Type mismatch";
     t "err2" "(let ((x (tuple 19 1 23 14 1515))) (get x 15 Num))" "Index out of bounds exception";
+    t "points" "(def p (x : Num y : Num) : Tup (tuple x y)) (let ((x (p 5 6))) x)" "( 5 6)";
 
     
     ]
