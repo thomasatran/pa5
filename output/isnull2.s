@@ -27,19 +27,19 @@ push rbx
 
   mov rax, 0
   cmp rax, 0
+  jne near temp_fif_ne_8
+  mov rax, 0x6
+  jmp near temp_fend_if_7
+temp_fif_ne_8:
+  mov rax, 0x2
+temp_fend_if_7:
+  cmp rax, 0
   jne near temp_fif_ne_6
   mov rax, 0x6
   jmp near temp_fend_if_5
 temp_fif_ne_6:
   mov rax, 0x2
 temp_fend_if_5:
-  cmp rax, 0
-  jne near temp_fif_ne_4
-  mov rax, 0x6
-  jmp near temp_fend_if_3
-temp_fif_ne_4:
-  mov rax, 0x2
-temp_fend_if_3:
   pop rbx
 ret
 

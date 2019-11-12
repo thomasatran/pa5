@@ -29,7 +29,7 @@ type expr =
   | EPrim1 of prim1 * expr
   | EPrim2 of prim2 * expr * expr
   | EApp of string * expr list
-  | EGet of expr * expr
+  | EGet of expr * expr * typ
   | EUpdate of expr * expr * expr
   | ETup of expr list
   | ENull of typ

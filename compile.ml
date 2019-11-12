@@ -47,7 +47,7 @@ let rec well_formed_e (e : expr) (env : (string * int) list) : string list =
   | ESet(name, e) -> (match (find env name) with
                         | None -> [sprintf "Variable identifier unbound %s" (name)]
                         | _ -> []) 
-  | EGet(e1, e2) -> let w1 = well_formed_e e1 env in 
+  | EGet(e1, e2, t1) -> let w1 = well_formed_e e1 env in 
                     let w2 = well_formed_e e2 env in
                     w1 @ w2
   | EWhile(cond, body) -> (let wf_w (e_i: expr) = (well_formed_e (e_i) (env)) in
@@ -139,7 +139,7 @@ let check p : string list =
       ) in
      (ex exprs (si+1)) @ [IMov((stackloc si), Reg(R15)); IMov(Reg(RAX),Const(List.length exprs));IMov((heaploc 0),Reg(RAX)); IAdd(Reg(R15), Const(8))] @ (placement (si+1) ((si+1) + (List.length exprs))) @ [IMov(Reg(RAX), (stackloc si))]
      )
-  | EGet(e1, e2) -> 
+  | EGet(e1, e2, _) -> 
       let c1 = compile_expr e1 (si+4) env in
       let c2 = compile_expr e2 (si+4) env in
       c1 @ [IMov((stackloc si), Reg(RAX))] @ c2 @ 

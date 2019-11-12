@@ -48,11 +48,11 @@ let build_def_env (defs : def list) : def_env =
       let t3 = tc_n e3 env in
       if (t1 == TTup) && (t2 == TNum) then 
       TTup else failwith "Type mismatch"
-    | EGet(e1, e2) -> 
+    | EGet(e1, e2, t) -> 
       let t1 = (tc_n e1 env) in 
       let t2 = (tc_n e2 env) in 
       if ((t1 ==TTup) && (t2 == TNum)) then
-      TTup else failwith "Type mismatch"
+      t else failwith "Type mismatch"
     | ESet(name, expr) -> (let tc_b = (tc_n expr env) in 
                           match (find env name) with
                           | None -> failwith "unbound variable"

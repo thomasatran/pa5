@@ -29,7 +29,8 @@ int64_t print_m(int64_t val) {
     int64_t len = *(addr_val);
     int i = len;
     int64_t val = *(addr_val+1);
-    printf("( %ld ", (val-1)/2);
+    printf("( ");
+    print_m(*(addr_val+1));
     for(i = 2; i < len; i++ ){
       print_m(*(addr_val+i));
     }
@@ -61,7 +62,8 @@ int64_t print(int64_t val) {
     int64_t len = *(addr_val);
     int i = len;
     int64_t val = *(addr_val+1);
-    printf("( %ld ", (val-1)/2);
+    printf("( ");
+    print_m(*(addr_val+1));
     for(i = 2; i < len; i++ ){
       print_m(*(addr_val+i));
     }

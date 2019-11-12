@@ -73,7 +73,7 @@ let rec parse (sexp : Sexp.t) =
         |[Atom(">");arg1;arg2] -> EPrim2(Greater, parse arg1, parse arg2)
         |[Atom("==");arg1;arg2] -> EPrim2(Equal, parse arg1, parse arg2)
         |[Atom("if");e1;  e2; e3] -> EIf(parse e1, parse e2, parse e3)
-        |[Atom("get"); e1; e2] -> EGet(parse e1, parse e2)
+        |[Atom("get"); e1; e2; Atom(t1)] -> EGet(parse e1, parse e2, parse_typ t1)
         |[Atom("update"); e1; e2;e3] -> EUpdate(parse e1, parse e2, parse e3)
         |[Atom("set"); Atom(e1); e2] -> ESet(e1, (parse e2)) 
         |[Atom("null"); Atom(typ)] -> ENull(parse_typ typ)
