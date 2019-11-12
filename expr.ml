@@ -4,6 +4,7 @@ type prim1 =
   | IsNum
   | IsBool
   | Print
+  | IsNull
 
 type prim2 =
   | Plus
@@ -13,6 +14,10 @@ type prim2 =
   | Greater
   | Equal
 
+type typ =
+    | TNum
+    | TBool
+    | TTup 
 type expr =
   | ELet of (string * expr) list * expr list
   | EWhile of expr * expr list
@@ -24,10 +29,12 @@ type expr =
   | EPrim1 of prim1 * expr
   | EPrim2 of prim2 * expr * expr
   | EApp of string * expr list
+  | EGet of expr * expr
+  | EUpdate of expr * expr * expr
+  | ETup of expr list
+  | ENull of typ
 
-type typ =
-  | TNum
-  | TBool
+
 
 type def =
   | DFun of string * (string * typ) list * typ * expr list

@@ -77,12 +77,12 @@ let rec arg_to_asm (a : arg) : string =
   | HexConst(n) -> sprintf "%#Lx" n
   | Reg(r) -> r_to_asm r
   | RegOffset(n, r) ->
-      (* TODO *)
-      failwith "Not yet implemented"
-  | Sized(s, a) ->
-    (s_to_asm s) ^ " " ^ (arg_to_asm a)
-  | Label(s) -> s
-
+       (* TODO *)
+       sprintf "[%s + %d]" (r_to_asm r) (n)
+       | Sized(s, a) ->
+         (s_to_asm s) ^ " " ^ (arg_to_asm a)
+       | Label(s) -> s
+     
 let i_to_asm (i : instruction) : string =
   match i with
   | IMov(dest, value) ->
@@ -95,32 +95,30 @@ let i_to_asm (i : instruction) : string =
     sprintf "  imul %s, %s" (arg_to_asm dest) (arg_to_asm to_mul)
   | IAnd(dest, mask) ->
     sprintf "  and %s, %s" (arg_to_asm dest) (arg_to_asm mask)
-  | IOr(dest, mask) ->
-      (* TODO *)
-      failwith "Not yet implemented"
+    | IOr(dest, mask) ->
+    (* TODO *)
+    sprintf "  or %s, %s" (arg_to_asm dest) (arg_to_asm mask)
   | IXor(dest, mask) ->
-      (* TODO *)
-      failwith "Not yet implemented"
+    (* TODO *)
+    sprintf "  xor %s, %s" (arg_to_asm dest) (arg_to_asm mask)
   | IShr(dest, to_shift) ->
-      (* TODO *)
-      failwith "Not yet implemented"
-  | ISar(dest, to_shift) ->
-      (* TODO *)
-      failwith "Not yet implemented"
+    (* TODO *)
+    sprintf "  shr %s, %s" (arg_to_asm dest) (arg_to_asm to_shift) 
+  | ISar(dest, to_shift) -> 
+    (* TODO *)
+    sprintf "  sar %s, %s" (arg_to_asm dest) (arg_to_asm to_shift)
   | IShl(dest, to_shift) ->
-      (* TODO *)
-      failwith "Not yet implemented"
+    (* TODO *)
+    sprintf "  shl %s, %s" (arg_to_asm dest) (arg_to_asm to_shift)
   | ICmp(left, right) ->
     sprintf "  cmp %s, %s" (arg_to_asm left) (arg_to_asm right)
   | IPush(arg) ->
-      (* TODO *)
-      failwith "Not yet implemented"
+    (* TODO *)
+    sprintf "  push %s" (arg_to_asm arg)
   | IPop(arg) ->
-      (* TODO *)
-      failwith "Not yet implemented"
+    sprintf "  pop %s" (arg_to_asm arg)
   | ICall(str) ->
-      (* TODO *)
-      failwith "Not yet implemented"
+    sprintf "  call %s" (str)
   | ILabel(name) ->
     name ^ ":"
   | IJne(label) ->
