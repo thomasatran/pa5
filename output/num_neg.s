@@ -28,12 +28,22 @@ push rbx
   mov rax, -83
   jo near error_handle_of
   mov [rsp + -16], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -16]
   xor rax, 1
   mov [rsp + -16], rax
   mov rax, 21
   jo near error_handle_of
   mov [rsp + -24], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -16]
   add rax, [rsp + -24]
   jo near error_handle_of

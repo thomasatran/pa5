@@ -204,9 +204,12 @@ let check p : string list =
 
 and compile_prim1 op e si env def_env hi : instruction list=
   let compile_expr e si env = compile_expr e si env def_env hi in 
+  let num_check = [IAnd(Reg(RAX),Const(1)); IShl(Reg(RAX), Const(2)); IAdd(Reg(RAX), Const(2)); ICmp(Reg(RAX), true_const);IJne("error_handle_num")] in
   match op with 
-        | Add1 ->  (compile_expr e si env) @ [IAdd(Reg(RAX), Const(2)); IJo("error_handle_of")]
-        | Sub1 ->  (compile_expr e si env) @ [ISub(Reg(RAX), Const(2));IJo("error_handle_of")]
+        | Add1 ->  (compile_expr e si env) @[IMov((stackloc si), Reg(RAX))] @ num_check
+        @ [IMov(Reg(RAX), (stackloc si)); IAdd(Reg(RAX), Const(2)); IJo("error_handle_of")]
+        | Sub1 ->  (compile_expr e si env) @[IMov((stackloc si), Reg(RAX))] @ num_check
+        @ [IMov(Reg(RAX), (stackloc si));ISub(Reg(RAX), Const(2));IJo("error_handle_of")]
         | IsNum -> (compile_expr e si env) @ [IAnd(Reg(RAX),Const(1)); IShl(Reg(RAX), Const(2)); IAdd(Reg(RAX), Const(2))]
         | IsNull -> 
         let end_if = (gen_temp "fend_if") in
@@ -226,39 +229,40 @@ and compile_prim2 op e1 e2 si env def_env hi =
   let compile_expr e si env = compile_expr e si env def_env hi in 
 
   let overflow_check = [IJo("error_handle_of")] in
+  let num_check = [IAnd(Reg(RAX),Const(1)); IShl(Reg(RAX), Const(2)); IAdd(Reg(RAX), Const(2)); ICmp(Reg(RAX), true_const);IJne("error_handle_num")] in
         (match op with
         | Plus -> 
-               (  ((compile_expr e1 si env) @ [IMov((stackloc si),Reg(RAX))] @ 
+               (  ((compile_expr e1 si env) @ [IMov((stackloc si),Reg(RAX))] @ num_check@
                                          
                                          [IMov(Reg(RAX), (stackloc si));IXor(Reg(RAX), Const(1));IMov( (stackloc si), Reg(RAX))]
-                                        @ (compile_expr e2 (si+1) env) @ [IMov((stackloc (si+1)), Reg(RAX))] @ 
+                                        @ (compile_expr e2 (si+1) env) @ [IMov((stackloc (si+1)), Reg(RAX))] @ num_check @
                                          [IMov(Reg(RAX), (stackloc (si)))]@ 
                                          [IAdd(Reg(RAX), (stackloc (si+1)))])
                                          @ overflow_check (*overflow check*)
                )                          
         | Minus -> 
-                  ((compile_expr e1 si env) @ [IMov((stackloc si),Reg(RAX))]  
-                    @ (compile_expr e2 (si+1) env) @ [IMov((stackloc (si+1)), Reg(RAX))] 
+                  ((compile_expr e1 si env) @ [IMov((stackloc si),Reg(RAX))]  @num_check
+                    @ (compile_expr e2 (si+1) env) @ [IMov((stackloc (si+1)), Reg(RAX))] @num_check
                   @ [IMov(Reg(RAX), (stackloc si));ISub( Reg(RAX), (stackloc (si+1)));IAdd(Reg(RAX), Const(1))] @ overflow_check (*overflow check*)
                   )
         | Times -> 
-              ( (compile_expr e1 si env) @ [IMov((stackloc si),Reg(RAX))]  @ 
+              ( (compile_expr e1 si env) @ [IMov((stackloc si),Reg(RAX))]  @ num_check @
                 [IMov(Reg(RAX), (stackloc si));ISar(Reg(RAX), Const(1));IMov((stackloc si), Reg(RAX))] @
                  (compile_expr e2 (si+1) env) @ [IMov((stackloc (si+1)), Sized(DWORD_PTR, Reg(RAX)));ISub((stackloc (si+1)), Sized(DWORD_PTR,Const(1)))]
-                 @ [IMov(Reg(RAX),(stackloc si));IMul(Reg(RAX), (stackloc (si+1)));IAdd(Reg(RAX), Const(1));] @ overflow_check (*overflow*)
+                 @ num_check @ [IMov(Reg(RAX),(stackloc si));IMul(Reg(RAX), (stackloc (si+1)));IAdd(Reg(RAX), Const(1));] @ overflow_check (*overflow*)
                  
               )
-        | Greater -> ( (compile_expr e2 si env) @ [IMov((stackloc si),Reg(RAX))] @ 
+        | Greater -> ( (compile_expr e2 si env) @ [IMov((stackloc si),Reg(RAX))] @  num_check@
                         [IMov(Reg(RAX), (stackloc si));IAnd(Reg(RAX), HexConst(0xFFFFFFFFFFFFFFFEL));IMov(Reg(RAX), (stackloc si))] @ 
-                        (compile_expr e1 (si+1) env) @ [IMov((stackloc (si+1)), Reg(RAX))] @ 
+                        (compile_expr e1 (si+1) env) @ [IMov((stackloc (si+1)), Reg(RAX))] @ num_check @
                         [IMov(Reg(RAX),(stackloc si));ISub( Reg(RAX), (stackloc (si+1)))] @overflow_check @  (*overflwo check*)
                         [IShr(Reg(RAX), Const(61)); IAnd(Reg(RAX), Const(4)); IAdd(Reg(RAX),false_const)]
 
               )
         | Less ->  ( (compile_expr e1 si env) @ [IMov((stackloc si),Reg(RAX))] @ 
-                        
+                        num_check @
                         [IMov(Reg(RAX), (stackloc si));ISub(Reg(RAX), Const(1));IMov(Reg(RAX), (stackloc si))] @ 
-                        (compile_expr e2 (si+1) env) @ [IMov((stackloc (si+1)), Reg(RAX))] @ 
+                        (compile_expr e2 (si+1) env) @ [IMov((stackloc (si+1)), Reg(RAX))] @ num_check @
                         [IMov((Reg(RAX), (stackloc si)));ISub( (Reg(RAX)), (stackloc (si+1)))] @ overflow_check @  
                         [IShr(Reg(RAX), Const(61)); IAnd(Reg(RAX), Const(4)); IAdd(Reg(RAX),false_const)]
 

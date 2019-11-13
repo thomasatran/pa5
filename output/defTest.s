@@ -7,12 +7,22 @@
 abs_val1:
   mov rax, [rsp + 8]
   mov [rsp + -16], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -16]
   sub rax, 1
   mov rax, [rsp + -16]
   mov rax, 1
   jo near error_handle_of
   mov [rsp + -24], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -16]
   sub rax, [rsp + -24]
   jo near error_handle_of
@@ -26,24 +36,34 @@ abs_val1:
   je near error_handle_bool
   mov rax, [rsp + -16]
   cmp rax, 0x6
-  jne near temp_if_ne_3
+  jne near temp_if_ne_1
   mov rax, -1
   jo near error_handle_of
   mov [rsp + -24], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -24]
   sar rax, 1
   mov [rsp + -24], rax
   mov rax, [rsp + 8]
   mov [rsp + -32], DWORD rax
   sub [rsp + -32], DWORD 1
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -24]
   imul rax, [rsp + -32]
   add rax, 1
   jo near error_handle_of
-  jmp near temp_Iend_if_4
-temp_if_ne_3:
+  jmp near temp_Iend_if_2
+temp_if_ne_1:
   mov rax, [rsp + 8]
-temp_Iend_if_4:
+temp_Iend_if_2:
   ret
 error_handle_num:
   mov rdi, 0
@@ -69,12 +89,12 @@ push rbx
   mov rax, -5
   jo near error_handle_of
   mov [rsp + -16], rax
-  mov rax, temp_after_call_5
+  mov rax, temp_after_call_3
   mov [rsp + -24], rax
   mov [rsp + -32], rsp
   sub rsp, 16
   call abs_val1
-temp_after_call_5:
+temp_after_call_3:
   mov rsp, [rsp + -16]
   pop rbx
 ret

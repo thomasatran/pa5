@@ -34,11 +34,21 @@ push rbx
 temp_while_cond_1:
   mov rax, [rsp + -24]
   mov [rsp + -32], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -32]
   and rax, 0xfffffffffffffffe
   mov rax, [rsp + -32]
   mov rax, [rsp + -16]
   mov [rsp + -40], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -32]
   sub rax, [rsp + -40]
   jo near error_handle_of
@@ -49,12 +59,22 @@ temp_while_cond_1:
   jne near temp_end_while_2
   mov rax, [rsp + -24]
   mov [rsp + -32], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -32]
   xor rax, 1
   mov [rsp + -32], rax
   mov rax, 3
   jo near error_handle_of
   mov [rsp + -40], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -32]
   add rax, [rsp + -40]
   jo near error_handle_of

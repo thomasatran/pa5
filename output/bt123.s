@@ -97,12 +97,12 @@ addBst1:
   mov [rsp + -40], rax
   mov rax, [rsp + 16]
   cmp rax, [rsp + -40]
-  jne near temp_eNe_19
+  jne near temp_eNe_17
   mov rax, 0x6
-  jmp near temp_end_if_20
-temp_eNe_19:
+  jmp near temp_end_if_18
+temp_eNe_17:
   mov rax, 0x2
-temp_end_if_20:
+temp_end_if_18:
   mov [rsp + -40], rax
   shl rax, 1
   and rax, 0x6
@@ -110,17 +110,27 @@ temp_end_if_20:
   je near error_handle_bool
   mov rax, [rsp + -40]
   cmp rax, 0x6
-  jne near temp_if_ne_5
+  jne near temp_if_ne_3
   mov rax, [rsp + 8]
-  jmp near temp_Iend_if_6
-temp_if_ne_5:
+  jmp near temp_Iend_if_4
+temp_if_ne_3:
   mov rax, [rsp + -16]
   mov [rsp + -48], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -48]
   sub rax, 1
   mov rax, [rsp + -48]
   mov rax, [rsp + 16]
   mov [rsp + -56], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -48]
   sub rax, [rsp + -56]
   jo near error_handle_of
@@ -134,15 +144,15 @@ temp_if_ne_5:
   je near error_handle_bool
   mov rax, [rsp + -48]
   cmp rax, 0x6
-  jne near temp_if_ne_7
+  jne near temp_if_ne_5
   mov rax, [rsp + -32]
   cmp rax, 0
-  jne near temp_fif_ne_18
+  jne near temp_fif_ne_16
   mov rax, 0x6
-  jmp near temp_fend_if_17
-temp_fif_ne_18:
+  jmp near temp_fend_if_15
+temp_fif_ne_16:
   mov rax, 0x2
-temp_fend_if_17:
+temp_fend_if_15:
   mov [rsp + -56], rax
   shl rax, 1
   and rax, 0x6
@@ -150,7 +160,7 @@ temp_fend_if_17:
   je near error_handle_bool
   mov rax, [rsp + -56]
   cmp rax, 0x6
-  jne near temp_if_ne_14
+  jne near temp_if_ne_12
   mov rax, [rsp + 8]
   mov [rsp + -64], rax
   mov rax, 5
@@ -195,30 +205,30 @@ temp_fend_if_17:
   mov [r15 + 0], rax
   mov r15, [rsp + -80]
   mov rax, [rsp + -64]
-  jmp near temp_Iend_if_15
-temp_if_ne_14:
+  jmp near temp_Iend_if_13
+temp_if_ne_12:
   mov rax, [rsp + 16]
   mov [rsp + -64], rax
   mov rax, [rsp + -32]
   mov [rsp + -72], rax
-  mov rax, temp_after_call_16
+  mov rax, temp_after_call_14
   mov [rsp + -80], rax
   mov [rsp + -88], rsp
   sub rsp, 72
   call addBst1
-temp_after_call_16:
+temp_after_call_14:
   mov rsp, [rsp + -16]
-temp_Iend_if_15:
-  jmp near temp_Iend_if_8
-temp_if_ne_7:
+temp_Iend_if_13:
+  jmp near temp_Iend_if_6
+temp_if_ne_5:
   mov rax, [rsp + -24]
   cmp rax, 0
-  jne near temp_fif_ne_13
+  jne near temp_fif_ne_11
   mov rax, 0x6
-  jmp near temp_fend_if_12
-temp_fif_ne_13:
+  jmp near temp_fend_if_10
+temp_fif_ne_11:
   mov rax, 0x2
-temp_fend_if_12:
+temp_fend_if_10:
   mov [rsp + -56], rax
   shl rax, 1
   and rax, 0x6
@@ -226,7 +236,7 @@ temp_fend_if_12:
   je near error_handle_bool
   mov rax, [rsp + -56]
   cmp rax, 0x6
-  jne near temp_if_ne_9
+  jne near temp_if_ne_7
   mov rax, 1
   jo near error_handle_of
   mov [rsp + -64], rax
@@ -275,22 +285,22 @@ temp_fend_if_12:
   mov r15, [rsp + -88]
   mov rax, [rsp + -72]
   mov rax, [rsp + 8]
-  jmp near temp_Iend_if_10
-temp_if_ne_9:
+  jmp near temp_Iend_if_8
+temp_if_ne_7:
   mov rax, [rsp + 16]
   mov [rsp + -64], rax
   mov rax, [rsp + -24]
   mov [rsp + -72], rax
-  mov rax, temp_after_call_11
+  mov rax, temp_after_call_9
   mov [rsp + -80], rax
   mov [rsp + -88], rsp
   sub rsp, 72
   call addBst1
-temp_after_call_11:
+temp_after_call_9:
   mov rsp, [rsp + -16]
-temp_Iend_if_10:
 temp_Iend_if_8:
 temp_Iend_if_6:
+temp_Iend_if_4:
   ret
 inBst1:
   mov rax, [rsp + 8]
@@ -363,12 +373,12 @@ inBst1:
   mov [rsp + -40], rax
   mov rax, [rsp + 16]
   cmp rax, [rsp + -40]
-  jne near temp_eNe_35
+  jne near temp_eNe_33
   mov rax, 0x6
-  jmp near temp_end_if_36
-temp_eNe_35:
+  jmp near temp_end_if_34
+temp_eNe_33:
   mov rax, 0x2
-temp_end_if_36:
+temp_end_if_34:
   mov [rsp + -40], rax
   shl rax, 1
   and rax, 0x6
@@ -376,18 +386,28 @@ temp_end_if_36:
   je near error_handle_bool
   mov rax, [rsp + -40]
   cmp rax, 0x6
-  jne near temp_if_ne_21
+  jne near temp_if_ne_19
   mov rax, 0x6
   mov rax, 0x6
-  jmp near temp_Iend_if_22
-temp_if_ne_21:
+  jmp near temp_Iend_if_20
+temp_if_ne_19:
   mov rax, [rsp + -16]
   mov [rsp + -48], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -48]
   sub rax, 1
   mov rax, [rsp + -48]
   mov rax, [rsp + 16]
   mov [rsp + -56], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -48]
   sub rax, [rsp + -56]
   jo near error_handle_of
@@ -401,15 +421,15 @@ temp_if_ne_21:
   je near error_handle_bool
   mov rax, [rsp + -48]
   cmp rax, 0x6
-  jne near temp_if_ne_23
+  jne near temp_if_ne_21
   mov rax, [rsp + -32]
   cmp rax, 0
-  jne near temp_fif_ne_34
+  jne near temp_fif_ne_32
   mov rax, 0x6
-  jmp near temp_fend_if_33
-temp_fif_ne_34:
+  jmp near temp_fend_if_31
+temp_fif_ne_32:
   mov rax, 0x2
-temp_fend_if_33:
+temp_fend_if_31:
   mov [rsp + -56], rax
   shl rax, 1
   and rax, 0x6
@@ -417,57 +437,57 @@ temp_fend_if_33:
   je near error_handle_bool
   mov rax, [rsp + -56]
   cmp rax, 0x6
-  jne near temp_if_ne_30
+  jne near temp_if_ne_28
   mov rax, 0x2
-  jmp near temp_Iend_if_31
-temp_if_ne_30:
+  jmp near temp_Iend_if_29
+temp_if_ne_28:
   mov rax, [rsp + 16]
   mov [rsp + -64], rax
   mov rax, [rsp + -32]
   mov [rsp + -72], rax
-  mov rax, temp_after_call_32
+  mov rax, temp_after_call_30
   mov [rsp + -80], rax
   mov [rsp + -88], rsp
   sub rsp, 72
   call inBst1
-temp_after_call_32:
+temp_after_call_30:
   mov rsp, [rsp + -16]
-temp_Iend_if_31:
+temp_Iend_if_29:
+  jmp near temp_Iend_if_22
+temp_if_ne_21:
+  mov rax, [rsp + -24]
+  cmp rax, 0
+  jne near temp_fif_ne_27
+  mov rax, 0x6
+  jmp near temp_fend_if_26
+temp_fif_ne_27:
+  mov rax, 0x2
+temp_fend_if_26:
+  mov [rsp + -56], rax
+  shl rax, 1
+  and rax, 0x6
+  cmp rax, 0x6
+  je near error_handle_bool
+  mov rax, [rsp + -56]
+  cmp rax, 0x6
+  jne near temp_if_ne_23
+  mov rax, 0x2
   jmp near temp_Iend_if_24
 temp_if_ne_23:
-  mov rax, [rsp + -24]
-  cmp rax, 0
-  jne near temp_fif_ne_29
-  mov rax, 0x6
-  jmp near temp_fend_if_28
-temp_fif_ne_29:
-  mov rax, 0x2
-temp_fend_if_28:
-  mov [rsp + -56], rax
-  shl rax, 1
-  and rax, 0x6
-  cmp rax, 0x6
-  je near error_handle_bool
-  mov rax, [rsp + -56]
-  cmp rax, 0x6
-  jne near temp_if_ne_25
-  mov rax, 0x2
-  jmp near temp_Iend_if_26
-temp_if_ne_25:
   mov rax, [rsp + 16]
   mov [rsp + -64], rax
   mov rax, [rsp + -24]
   mov [rsp + -72], rax
-  mov rax, temp_after_call_27
+  mov rax, temp_after_call_25
   mov [rsp + -80], rax
   mov [rsp + -88], rsp
   sub rsp, 72
   call inBst1
-temp_after_call_27:
+temp_after_call_25:
   mov rsp, [rsp + -16]
-temp_Iend_if_26:
 temp_Iend_if_24:
 temp_Iend_if_22:
+temp_Iend_if_20:
   ret
 error_handle_num:
   mov rdi, 0
@@ -493,12 +513,12 @@ push rbx
   mov rax, 5
   jo near error_handle_of
   mov [rsp + -16], rax
-  mov rax, temp_after_call_45
+  mov rax, temp_after_call_43
   mov [rsp + -24], rax
   mov [rsp + -32], rsp
   sub rsp, 16
   call createBst1
-temp_after_call_45:
+temp_after_call_43:
   mov rsp, [rsp + -16]
   mov [rsp + -16], rax
   mov rax, [rsp + -16]
@@ -507,6 +527,39 @@ temp_after_call_45:
   call print
   add rsp, 24
   mov rax, 9
+  jo near error_handle_of
+  mov [rsp + -24], rax
+  mov rax, [rsp + -16]
+  mov [rsp + -32], rax
+  mov rax, temp_after_call_35
+  mov [rsp + -40], rax
+  mov [rsp + -48], rsp
+  sub rsp, 32
+  call addBst1
+temp_after_call_35:
+  mov rsp, [rsp + -16]
+  mov rax, -5
+  jo near error_handle_of
+  mov [rsp + -24], rax
+  mov rax, [rsp + -16]
+  mov [rsp + -32], rax
+  mov rax, temp_after_call_36
+  mov [rsp + -40], rax
+  mov [rsp + -48], rsp
+  sub rsp, 32
+  call inBst1
+temp_after_call_36:
+  mov rsp, [rsp + -16]
+  mov rdi, rax
+  sub rsp, 24
+  call print
+  add rsp, 24
+  mov rax, [rsp + -16]
+  mov rdi, rax
+  sub rsp, 24
+  call print
+  add rsp, 24
+  mov rax, 33
   jo near error_handle_of
   mov [rsp + -24], rax
   mov rax, [rsp + -16]
@@ -527,19 +580,10 @@ temp_after_call_37:
   mov [rsp + -40], rax
   mov [rsp + -48], rsp
   sub rsp, 32
-  call inBst1
+  call addBst1
 temp_after_call_38:
   mov rsp, [rsp + -16]
-  mov rdi, rax
-  sub rsp, 24
-  call print
-  add rsp, 24
-  mov rax, [rsp + -16]
-  mov rdi, rax
-  sub rsp, 24
-  call print
-  add rsp, 24
-  mov rax, 33
+  mov rax, -117
   jo near error_handle_of
   mov [rsp + -24], rax
   mov rax, [rsp + -16]
@@ -551,30 +595,6 @@ temp_after_call_38:
   call addBst1
 temp_after_call_39:
   mov rsp, [rsp + -16]
-  mov rax, -5
-  jo near error_handle_of
-  mov [rsp + -24], rax
-  mov rax, [rsp + -16]
-  mov [rsp + -32], rax
-  mov rax, temp_after_call_40
-  mov [rsp + -40], rax
-  mov [rsp + -48], rsp
-  sub rsp, 32
-  call addBst1
-temp_after_call_40:
-  mov rsp, [rsp + -16]
-  mov rax, -117
-  jo near error_handle_of
-  mov [rsp + -24], rax
-  mov rax, [rsp + -16]
-  mov [rsp + -32], rax
-  mov rax, temp_after_call_41
-  mov [rsp + -40], rax
-  mov [rsp + -48], rsp
-  sub rsp, 32
-  call addBst1
-temp_after_call_41:
-  mov rsp, [rsp + -16]
   mov rax, [rsp + -16]
   mov rdi, rax
   sub rsp, 24
@@ -585,12 +605,12 @@ temp_after_call_41:
   mov [rsp + -24], rax
   mov rax, [rsp + -16]
   mov [rsp + -32], rax
-  mov rax, temp_after_call_42
+  mov rax, temp_after_call_40
   mov [rsp + -40], rax
   mov [rsp + -48], rsp
   sub rsp, 32
   call inBst1
-temp_after_call_42:
+temp_after_call_40:
   mov rsp, [rsp + -16]
   mov rdi, rax
   sub rsp, 24
@@ -601,12 +621,12 @@ temp_after_call_42:
   mov [rsp + -24], rax
   mov rax, [rsp + -16]
   mov [rsp + -32], rax
-  mov rax, temp_after_call_43
+  mov rax, temp_after_call_41
   mov [rsp + -40], rax
   mov [rsp + -48], rsp
   sub rsp, 32
   call inBst1
-temp_after_call_43:
+temp_after_call_41:
   mov rsp, [rsp + -16]
   mov rdi, rax
   sub rsp, 24
@@ -617,12 +637,12 @@ temp_after_call_43:
   mov [rsp + -24], rax
   mov rax, [rsp + -16]
   mov [rsp + -32], rax
-  mov rax, temp_after_call_44
+  mov rax, temp_after_call_42
   mov [rsp + -40], rax
   mov [rsp + -48], rsp
   sub rsp, 32
   call inBst1
-temp_after_call_44:
+temp_after_call_42:
   mov rsp, [rsp + -16]
   mov rdi, rax
   sub rsp, 24

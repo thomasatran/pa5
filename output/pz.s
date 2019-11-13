@@ -44,6 +44,11 @@ pPlus1:
   mov rax, [r15 + 0]
   mov r15, [rsp + -40]
   mov [rsp + -24], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -24]
   xor rax, 1
   mov [rsp + -24], rax
@@ -69,6 +74,11 @@ pPlus1:
   mov rax, [r15 + 0]
   mov r15, [rsp + -48]
   mov [rsp + -32], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -24]
   add rax, [rsp + -32]
   jo near error_handle_of
@@ -95,6 +105,11 @@ pPlus1:
   mov rax, [r15 + 0]
   mov r15, [rsp + -48]
   mov [rsp + -32], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -32]
   xor rax, 1
   mov [rsp + -32], rax
@@ -120,6 +135,11 @@ pPlus1:
   mov rax, [r15 + 0]
   mov r15, [rsp + -56]
   mov [rsp + -40], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
   mov rax, [rsp + -32]
   add rax, [rsp + -40]
   jo near error_handle_of
@@ -163,12 +183,12 @@ push rbx
   mov rax, 13
   jo near error_handle_of
   mov [rsp + -24], rax
-  mov rax, temp_after_call_6
+  mov rax, temp_after_call_7
   mov [rsp + -32], rax
   mov [rsp + -40], rsp
   sub rsp, 24
   call p1
-temp_after_call_6:
+temp_after_call_7:
   mov rsp, [rsp + -16]
   mov [rsp + -16], rax
   mov rax, 3
@@ -177,23 +197,72 @@ temp_after_call_6:
   mov rax, 37
   jo near error_handle_of
   mov [rsp + -32], rax
-  mov rax, temp_after_call_7
+  mov rax, temp_after_call_8
   mov [rsp + -40], rax
   mov [rsp + -48], rsp
   sub rsp, 32
   call p1
-temp_after_call_7:
+temp_after_call_8:
   mov rsp, [rsp + -16]
   mov [rsp + -24], rax
-  mov rax, temp_after_call_8
+  mov rax, temp_after_call_9
   mov [rsp + -32], rax
   mov [rsp + -40], rsp
   sub rsp, 24
   call pPlus1
-temp_after_call_8:
+temp_after_call_9:
   mov rsp, [rsp + -16]
   mov [rsp + -16], rax
   mov rax, [rsp + -16]
+  mov rdi, rax
+  sub rsp, 24
+  call print
+  add rsp, 24
+  mov rax, [rsp + -16]
+  mov [rsp + -24], rax
+  mov rax, 11
+  jo near error_handle_of
+  mov [rsp + -32], rax
+  mov rax, 13
+  jo near error_handle_of
+  mov [rsp + -40], rax
+  mov rax, temp_after_call_3
+  mov [rsp + -48], rax
+  mov [rsp + -56], rsp
+  sub rsp, 40
+  call p1
+temp_after_call_3:
+  mov rsp, [rsp + -16]
+  mov [rsp + -32], rax
+  mov rax, 17
+  jo near error_handle_of
+  mov [rsp + -40], rax
+  mov rax, 59
+  jo near error_handle_of
+  mov [rsp + -48], rax
+  mov rax, temp_after_call_4
+  mov [rsp + -56], rax
+  mov [rsp + -64], rsp
+  sub rsp, 48
+  call p1
+temp_after_call_4:
+  mov rsp, [rsp + -16]
+  mov [rsp + -40], rax
+  mov rax, temp_after_call_5
+  mov [rsp + -48], rax
+  mov [rsp + -56], rsp
+  sub rsp, 40
+  call pPlus1
+temp_after_call_5:
+  mov rsp, [rsp + -16]
+  mov [rsp + -32], rax
+  mov rax, temp_after_call_6
+  mov [rsp + -40], rax
+  mov [rsp + -48], rsp
+  sub rsp, 32
+  call pPlus1
+temp_after_call_6:
+  mov rsp, [rsp + -16]
   pop rbx
 ret
 

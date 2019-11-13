@@ -34,7 +34,10 @@ let rec parse (sexp : Sexp.t) =
   |Atom("false") -> EBool(false)
   |Atom(s) ->  if ((Str.string_match (valid_id_regex) (s) (0))) then
                         (match (s) with
+                        | "get" -> failwith "Invalid"
                         | "let" -> failwith "Invalid"
+                        | "update" -> failwith "Invalid"
+                        | "null" -> failwith "Invalid"
                         | "set" -> failwith "Invalid"
                         | "while" -> failwith "Invalid"
                         | "print" -> failwith "Invalid"
@@ -42,7 +45,7 @@ let rec parse (sexp : Sexp.t) =
                         | "sub1"-> failwith "Invalid"
                         | "isNum"-> failwith "Invalid"
                         | "isBool"-> failwith "Invalid"
-                        | "get" -> failwith "Invalid"
+                        | "tuple" -> failwith "Invalid"
                         | "if"-> failwith "Invalid"
                         | "*" -> failwith "Invalid"
                         | "-" -> failwith "Invalid"
@@ -82,6 +85,8 @@ let rec parse (sexp : Sexp.t) =
         |Atom(s)::exprs -> (match s with 
                         | "get" -> failwith "Invalid"
                         | "let" -> failwith "Invalid"
+                        | "update" -> failwith "Invalid"
+                        | "null" -> failwith "Invalid"
                         | "set" -> failwith "Invalid"
                         | "while" -> failwith "Invalid"
                         | "print" -> failwith "Invalid"
@@ -89,6 +94,7 @@ let rec parse (sexp : Sexp.t) =
                         | "sub1"-> failwith "Invalid"
                         | "isNum"-> failwith "Invalid"
                         | "isBool"-> failwith "Invalid"
+                        | "tuple" -> failwith "Invalid"
                         | "if"-> failwith "Invalid"
                         | "*" -> failwith "Invalid"
                         | "-" -> failwith "Invalid"
@@ -101,6 +107,18 @@ and parse_binding binding =
   |List([Atom("sub1");_]) -> failwith "Invalid"
   |List([Atom("add1");_]) -> failwith "Invalid"
   |List([Atom("set");_]) -> failwith "Invalid"
+  |List([Atom("get");_]) -> failwith "Invalid"
+  |List([Atom("update");_]) -> failwith "Invalid"
+  |List([Atom("null");_]) -> failwith "Invalid"
+  |List([Atom("isNull");_]) -> failwith "Invalid"
+  |List([Atom("isBool");_]) -> failwith "Invalid"
+  |List([Atom("tuple");_]) -> failwith "Invalid"
+  |List([Atom("*");_]) -> failwith "Invalid"
+  |List([Atom("-");_]) -> failwith "Invalid"
+  |List([Atom("+");_]) -> failwith "Invalid"
+  |List([Atom("while");_]) -> failwith "Invalid"
+  |List([Atom("print");_]) -> failwith "Invalid"
+  |List([Atom("if");_]) -> failwith "Invalid"
   |List([Atom(s);ex]) -> (s, parse ex)
   |_ -> failwith "Invalid binding")
 
@@ -114,6 +132,8 @@ and parse_binding binding =
                         match name with 
                         | "get" -> failwith "Invalid"
                         | "let" -> failwith "Invalid"
+                        | "update" -> failwith "Invalid"
+                        | "null" -> failwith "Invalid"
                         | "set" -> failwith "Invalid"
                         | "while" -> failwith "Invalid"
                         | "print" -> failwith "Invalid"
@@ -121,6 +141,7 @@ and parse_binding binding =
                         | "sub1"-> failwith "Invalid"
                         | "isNum"-> failwith "Invalid"
                         | "isBool"-> failwith "Invalid"
+                        | "tuple" -> failwith "Invalid"
                         | "if"-> failwith "Invalid"
                         | "*" -> failwith "Invalid"
                         | "-" -> failwith "Invalid"

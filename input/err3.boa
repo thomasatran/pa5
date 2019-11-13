@@ -1,0 +1,1 @@
+(let ((x (tuple 19 1 true 14 1515))) (+ (get x 2 Num) 4))

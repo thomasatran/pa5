@@ -26,6 +26,13 @@ push rbx
   mov [rsp - 8], rsi
 
   mov rax, [rsp + -8]
+  mov [rsp + -16], rax
+  and rax, 1
+  shl rax, 2
+  add rax, 2
+  cmp rax, 0x6
+  jne near error_handle_num
+  mov rax, [rsp + -16]
   add rax, 2
   jo near error_handle_of
   pop rbx

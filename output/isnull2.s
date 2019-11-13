@@ -25,22 +25,21 @@ push rbx
   mov r15, rdi
   mov [rsp - 8], rsi
 
-  mov rax, 11
-  jo near error_handle_of
-  mov [rsp + -16], rax
-  mov rax, 135
-  jo near error_handle_of
-  mov [rsp + -24], rax
-  mov rax, [rsp + -24]
-  mov [rsp + -32], rax
-  and rax, 1
-  shl rax, 2
-  add rax, 2
-  cmp rax, 0x6
-  jne near error_handle_num
-  mov rax, [rsp + -32]
-  sub rax, 2
-  jo near error_handle_of
+  mov rax, 0
+  cmp rax, 0
+  jne near temp_fif_ne_6
+  mov rax, 0x6
+  jmp near temp_fend_if_5
+temp_fif_ne_6:
+  mov rax, 0x2
+temp_fend_if_5:
+  cmp rax, 0
+  jne near temp_fif_ne_4
+  mov rax, 0x6
+  jmp near temp_fend_if_3
+temp_fif_ne_4:
+  mov rax, 0x2
+temp_fend_if_3:
   pop rbx
 ret
 
