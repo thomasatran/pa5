@@ -146,7 +146,7 @@ let check p : string list =
       [IMov((stackloc (si+1)), Reg(RAX)); ISar(Reg(RAX), Const(1)); ICmp(Reg(RAX), Const(0)); IJl("out_of_bounds");
       IMov((stackloc (si+2)), Reg(R15)); IMov(Reg(R15), (stackloc si));IMov(Reg(RAX), (stackloc (si+1))); ISar(Reg(RAX), Const(1));ICmp(Reg(RAX), (heaploc (0)));IJg("out_of_bounds");
       IMov(Reg(RAX),(stackloc (si+1))); ISar(Reg(RAX),Const(1)); IAdd(Reg(RAX),Const(1)) ;IMul(Reg(RAX), Const(8)); 
-      IAdd(Reg(R15), Reg(RAX)); IMov(Reg(RAX), (heaploc 0)); IMov(Reg(R15), (stackloc si))]
+      IAdd(Reg(R15), Reg(RAX)); IMov(Reg(RAX), (heaploc 0)); IMov(Reg(R15), (stackloc (si+2)))]
   | EUpdate(e1, e2, e3)-> 
     let c1 = compile_expr e1 (si+4) env in
     let c2 = compile_expr e2 (si+4) env in
@@ -155,7 +155,7 @@ let check p : string list =
     [ IMov((stackloc (si+3)), Reg(RAX));IMov(Reg(RAX), (stackloc (si+1)));ICmp(Reg(RAX), Const(0)); IJl("out_of_bounds");
     IMov((stackloc (si+2)), Reg(R15)); IMov(Reg(R15), (stackloc si));IMov(Reg(RAX), (stackloc (si+1))); ISar(Reg(RAX), Const(1));ICmp(Reg(RAX), (heaploc (0)));IJg("out_of_bounds");
     IMov(Reg(RAX),(stackloc (si+1))); ISar(Reg(RAX),Const(1)); IAdd(Reg(RAX),Const(1)) ;IMul(Reg(RAX), Const(8)); 
-    IAdd(Reg(R15), Reg(RAX)); IMov(Reg(RAX), (stackloc (si+3))); IMov((heaploc 0),Reg(RAX)) ; IMov(Reg(R15), (stackloc si)); IMov(Reg(RAX),(stackloc si))]
+    IAdd(Reg(R15), Reg(RAX)); IMov(Reg(RAX), (stackloc (si+3))); IMov((heaploc 0),Reg(RAX)) ; IMov(Reg(R15), (stackloc (si+2))); IMov(Reg(RAX),(stackloc si))]
   | ELet( ls, body) -> 
                   (match ls with 
                   | [] -> let comp (es: expr) = (compile_expr es si env) in

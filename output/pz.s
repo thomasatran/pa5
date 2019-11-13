@@ -42,7 +42,7 @@ pPlus1:
   imul rax, 8
   add r15, rax
   mov rax, [r15 + 0]
-  mov r15, [rsp + -24]
+  mov r15, [rsp + -40]
   mov [rsp + -24], rax
   mov rax, [rsp + -24]
   xor rax, 1
@@ -67,7 +67,7 @@ pPlus1:
   imul rax, 8
   add r15, rax
   mov rax, [r15 + 0]
-  mov r15, [rsp + -32]
+  mov r15, [rsp + -48]
   mov [rsp + -32], rax
   mov rax, [rsp + -24]
   add rax, [rsp + -32]
@@ -93,7 +93,7 @@ pPlus1:
   imul rax, 8
   add r15, rax
   mov rax, [r15 + 0]
-  mov r15, [rsp + -32]
+  mov r15, [rsp + -48]
   mov [rsp + -32], rax
   mov rax, [rsp + -32]
   xor rax, 1
@@ -118,7 +118,7 @@ pPlus1:
   imul rax, 8
   add r15, rax
   mov rax, [r15 + 0]
-  mov r15, [rsp + -40]
+  mov r15, [rsp + -56]
   mov [rsp + -40], rax
   mov rax, [rsp + -32]
   add rax, [rsp + -40]
@@ -163,12 +163,12 @@ push rbx
   mov rax, 13
   jo near error_handle_of
   mov [rsp + -24], rax
-  mov rax, temp_after_call_1
+  mov rax, temp_after_call_6
   mov [rsp + -32], rax
   mov [rsp + -40], rsp
   sub rsp, 24
   call p1
-temp_after_call_1:
+temp_after_call_6:
   mov rsp, [rsp + -16]
   mov [rsp + -16], rax
   mov rax, 3
@@ -177,20 +177,20 @@ temp_after_call_1:
   mov rax, 37
   jo near error_handle_of
   mov [rsp + -32], rax
-  mov rax, temp_after_call_2
+  mov rax, temp_after_call_7
   mov [rsp + -40], rax
   mov [rsp + -48], rsp
   sub rsp, 32
   call p1
-temp_after_call_2:
+temp_after_call_7:
   mov rsp, [rsp + -16]
   mov [rsp + -24], rax
-  mov rax, temp_after_call_3
+  mov rax, temp_after_call_8
   mov [rsp + -32], rax
   mov [rsp + -40], rsp
   sub rsp, 24
   call pPlus1
-temp_after_call_3:
+temp_after_call_8:
   mov rsp, [rsp + -16]
   mov [rsp + -16], rax
   mov rax, [rsp + -16]

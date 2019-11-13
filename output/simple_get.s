@@ -67,7 +67,7 @@ push rbx
   imul rax, 8
   add r15, rax
   mov rax, [r15 + 0]
-  mov r15, [rsp + -16]
+  mov r15, [rsp + -32]
   pop rbx
 ret
 

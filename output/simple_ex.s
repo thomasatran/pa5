@@ -159,7 +159,7 @@ push rbx
   imul rax, 8
   add r15, rax
   mov rax, [r15 + 0]
-  mov r15, [rsp + -24]
+  mov r15, [rsp + -40]
   mov rdi, rax
   sub rsp, 24
   call print
@@ -188,7 +188,7 @@ push rbx
   add r15, rax
   mov rax, [rsp + -48]
   mov [r15 + 0], rax
-  mov r15, [rsp + -24]
+  mov r15, [rsp + -40]
   mov rax, [rsp + -24]
   mov rax, [rsp + -16]
   mov rdi, rax
@@ -215,7 +215,7 @@ push rbx
   imul rax, 8
   add r15, rax
   mov rax, [r15 + 0]
-  mov r15, [rsp + -24]
+  mov r15, [rsp + -40]
   mov rdi, rax
   sub rsp, 24
   call print
@@ -240,7 +240,7 @@ push rbx
   imul rax, 8
   add r15, rax
   mov rax, [r15 + 0]
-  mov r15, [rsp + -24]
+  mov r15, [rsp + -40]
   mov [rsp + -24], rax
   mov rax, [rsp + -24]
   xor rax, 1
@@ -265,7 +265,7 @@ push rbx
   imul rax, 8
   add r15, rax
   mov rax, [r15 + 0]
-  mov r15, [rsp + -32]
+  mov r15, [rsp + -48]
   mov [rsp + -32], rax
   mov rax, [rsp + -24]
   add rax, [rsp + -32]
@@ -298,7 +298,7 @@ push rbx
   add r15, rax
   mov rax, [rsp + -48]
   mov [r15 + 0], rax
-  mov r15, [rsp + -24]
+  mov r15, [rsp + -40]
   mov rax, [rsp + -24]
   mov rax, [rsp + -16]
   mov rdi, rax
@@ -328,7 +328,7 @@ push rbx
   add r15, rax
   mov rax, [rsp + -80]
   mov [r15 + 0], rax
-  mov r15, [rsp + -56]
+  mov r15, [rsp + -72]
   mov rax, [rsp + -56]
   mov [rsp + -24], rax
   mov rax, 1
@@ -349,7 +349,48 @@ push rbx
   imul rax, 8
   add r15, rax
   mov rax, [r15 + 0]
+  mov r15, [rsp + -40]
+  mov rax, [rsp + -16]
+  mov [rsp + -24], rax
+  mov rax, 1
+  jo near error_handle_of
+  mov [rsp + -32], rax
+  mov rax, 3
+  jo near error_handle_of
+  mov [rsp + -64], rax
+  mov rax, 5
+  jo near error_handle_of
+  mov [rsp + -72], rax
+  mov [rsp + -56], r15
+  mov rax, 2
+  mov [r15 + 0], rax
+  add r15, 8
+  mov rax, [rsp + -64]
+  mov [r15 + 0], rax
+  add r15, 8
+  mov rax, [rsp + -72]
+  mov [r15 + 0], rax
+  add r15, 8
+  mov rax, [rsp + -56]
+  mov [rsp + -48], rax
+  mov rax, [rsp + -32]
+  cmp rax, 0
+  jl near out_of_bounds
+  mov [rsp + -40], r15
   mov r15, [rsp + -24]
+  mov rax, [rsp + -32]
+  sar rax, 1
+  cmp rax, [r15 + 0]
+  jg near out_of_bounds
+  mov rax, [rsp + -32]
+  sar rax, 1
+  add rax, 1
+  imul rax, 8
+  add r15, rax
+  mov rax, [rsp + -48]
+  mov [r15 + 0], rax
+  mov r15, [rsp + -40]
+  mov rax, [rsp + -24]
   pop rbx
 ret
 

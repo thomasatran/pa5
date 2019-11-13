@@ -24,6 +24,9 @@ int64_t print_m(int64_t val) {
   if(val == TRUE){
   	printf("true ");
   }
+    else if(val == 0){
+    printf("null ");
+  }
   else if ((val & 7L) == 0){
     int64_t * addr_val = (int64_t *) val;
     int64_t len = *(addr_val);
@@ -43,7 +46,6 @@ int64_t print_m(int64_t val) {
   }else if((val && 1)){
 	  printf("%ld ", (val-1)/2);
   }
-
   else{
 	  fprintf(stderr, "Got unrepresentable value %ld", val);
 	  exit(1);
@@ -56,6 +58,9 @@ int64_t print(int64_t val) {
   
   if(val == TRUE){
   	printf("true\n");
+  }
+    else if(val == 0){
+    printf("null\n");
   }
   else if ((val & 7L) == 0){
     int64_t * addr_val = (int64_t *) val;
@@ -77,7 +82,6 @@ int64_t print(int64_t val) {
   }else if((val && 1)){
 	  printf("%ld\n", (val-1)/2);
   }
-
   else{
 	  fprintf(stderr, "Got unrepresentable value %ld", val);
 	  exit(1);

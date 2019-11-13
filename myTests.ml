@@ -35,8 +35,8 @@ let myTestList =
     t "simple_get" "(get (tuple 1 2 3) 0 Num)" "1"; 
     t "dif_get" "(get (tuple 19 1 23 14 1515 (tuple 19 (tuple 19 1 23 14 1515) 1 23 14 1515)) 5 Tup)" "( 19 ( 19 1 23 14 1515 ) 1 23 14 1515 )";
     t "update_1" "(update (tuple 19 1 23 14 1515) 3 (tuple 19 1 23 14 1515))" "( 19 1 23 ( 19 1 23 14 1515 ) 1515 )";
-    t "isnull" "(isNull (null Num))" "true";
-    t "isnull2" "(isNull (isNull (null Num)))" "false";
+    (* t "isnull" "(isNull (null Num))" "true";
+    t "isnull2" "(isNull (isNull (null Num)))" "false"; *)
     t "simple_ex" "(let ((x (tuple 19 1 23 14 1515))) 
     (print (get (tuple 19 1 23 14 1515 (tuple 19 x 1 23 14 1515)) 5 Tup))
     (update x 3 5)
@@ -46,13 +46,64 @@ let myTestList =
     (update x 0 true)
     (print x)
     (get (update x 0 false) 0 Bool)
-    ) " "( 19 ( 19 1 23 14 1515 ) 1 23 14 1515 )\n( 19 1 23 5 1515 )\n1515\n24\n( true 1 23 5 1515 )\nfalse";
+    (update x 0 (tuple 1 2))
+    ) " "( 19 ( 19 1 23 14 1515 ) 1 23 14 1515 )\n( 19 1 23 5 1515 )\n1515\n24\n( true 1 23 5 1515 )\n( ( 1 2 ) 1 23 5 1515 )";
     (* t "err1" "(let ((x (tuple 19 1 23 14 1515))) (+ (get x 1 Num) (get x 2 Tup)))" "Compile error: Type mismatch";
     t "err2" "(let ((x (tuple 19 1 23 14 1515))) (get x 15 Num))" "Index out of bounds exception"; *)
     t "pz" "(def p (x : Num y : Num) : Tup (tuple x y))
     (def pPlus (x : Tup y : Tup) : Tup (tuple (+ (get x 0 Num) (get y 0 Num)) (+ (get x 1 Num) (get y 1 Num))))
-     (let ((x (pPlus (p 5 6) (p 1 18)))) x)" "( 6 24 )";
-
+     (let ((x (pPlus (p 5 6) (p 1 18)))) 
+     x
+     )" "( 6 24 )";
+     t "bt123" "(def createBst (x : Num) : Tup (tuple x (null Tup) (null Tup))) 
+     (def addBst (x : Num y : Tup) : Tup (let ((val (get y 0 Num)) (left (get y 1 Tup)) (right (get y 2 Tup))) 
+     (if (== val x) 
+      y 
+      (if (< val x)
+        (if (isNull right)
+          (update y 2 (tuple x (null Tup) (null Tup))) 
+          (addBst x right)
+        )
+        (if (isNull left)
+          (let ((emptyP1 0))
+            (update y 1 (tuple x (null Tup) (null Tup)))
+            y
+          ) 
+          (addBst x left)) 
+      ) 
+     )
+     ))
+     (def inBst (x : Num y : Tup) : Bool 
+      (let ((val (get y 0 Num)) (left (get y 1 Tup)) (right (get y 2 Tup))) 
+        (if (== val x) 
+          true 
+          (if (< val x)
+            (if (isNull right)
+              false 
+              (inBst x right)
+            )
+            (if (isNull left)
+              false 
+              (inBst x left)
+            ) 
+          ) 
+        )
+      )
+     )
+     (let ((x (createBst 2))) 
+     (print x)
+     (addBst 4 x )
+     (print (inBst -3 x))
+     (print x)
+     (addBst 16 x)
+     (addBst -3 x)
+     (addBst -59 x)
+     (print x)
+     (print (inBst -3 x))
+     (print (inBst 400 x))
+     (print (inBst 16 x))
+     )" "( 2 null null )\nfalse\n( 2 null ( 4 null null ) )\n( 2 ( -3 ( -59 null null ) null ) ( 4 null ( 16 null null ) ) )\ntrue\nfalse\ntrue\ntrue";
+    
     
     ]
 ;;

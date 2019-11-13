@@ -116,7 +116,7 @@ push rbx
   add r15, rax
   mov rax, [rsp + -40]
   mov [r15 + 0], rax
-  mov r15, [rsp + -16]
+  mov r15, [rsp + -32]
   mov rax, [rsp + -16]
   pop rbx
 ret
