@@ -34,9 +34,6 @@ type expr =
   | ETup of expr list
   | ENull of typ
 
-
-
 type def =
   | DFun of string * (string * typ) list * typ * expr list
-
 type prog = def list * expr
